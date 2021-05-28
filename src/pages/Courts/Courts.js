@@ -35,7 +35,7 @@ export default function ClientsPage() {
         >
           <Tab label="About Court" {...a11yProps(0)} />
           <Tab label="Plaints" {...a11yProps(1)} />
-          <Tab label="JudgeAssignment" {...a11yProps(2)} />
+          <Tab label="Judge Assignment" {...a11yProps(2)} />
           <Tab label="Hearing" {...a11yProps(3)} />
           <Tab label="Ongoing" {...a11yProps(4)} />
           <Tab label="Expired" {...a11yProps(5)} />
@@ -48,8 +48,7 @@ export default function ClientsPage() {
           <PlaintsTable />
         </TabPanel>
         <TabPanel className={classes.table} value={value} index={2}>
-          JudgeAssignment
-          {/* <JudgementAssignment /> */}
+          <JudgementAssignment />
         </TabPanel>
         <TabPanel className={classes.table} value={value} index={3}>
           <HearingsTable />
