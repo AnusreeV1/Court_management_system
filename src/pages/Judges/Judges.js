@@ -9,7 +9,7 @@ import AppBar from "../MyAppbar";
 import HearingsTable from "./components/HearingsTable";
 import ExpiredTable from "./components/ExpiredTable";
 import OngoingTable from "./components/OngoingTable";
-import Judgement from "./components/Judgement";
+import Info from "./components/Info";
 export default function ClientsPage() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
@@ -19,7 +19,7 @@ export default function ClientsPage() {
 
   return (
     <div>
-      <AppBar state={true} heading = {"Judge"}/>
+      <AppBar state={true} heading={"Judge"} />
 
       <div className={classes.sideBar}>
         <Tabs
@@ -34,28 +34,21 @@ export default function ClientsPage() {
           <Tab label="Hearings" {...a11yProps(1)} />
           <Tab label="Ongoing Cases" {...a11yProps(2)} />
           <Tab label="Expired Cases" {...a11yProps(3)} />
-          <Tab label="Judgement" {...a11yProps(4)} />
         </Tabs>
         <TabPanel className={classes.table} value={value} index={0}>
-          My Profile
+          <Info />
         </TabPanel>
 
         <TabPanel className={classes.table} value={value} index={1}>
-          Hearings
           <HearingsTable />
         </TabPanel>
         <TabPanel className={classes.table} value={value} index={2}>
-          Ongoing Cases
           <OngoingTable />
         </TabPanel>
         <TabPanel className={classes.table} value={value} index={3}>
-          Expired Cases
           <ExpiredTable />
         </TabPanel>
-        <TabPanel className={classes.table} value={value} index={4}>
-          Judgement
-          {/* <Judgement /> */}
-        </TabPanel>
+       
       </div>
     </div>
   );
@@ -112,5 +105,4 @@ const useStyles = makeStyles((theme) => ({
   table: {
     width: "100%",
   },
-
 }));
