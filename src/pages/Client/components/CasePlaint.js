@@ -8,12 +8,26 @@ const CaseDetails = () => {
   // console.log("case Details");
   const [title, settitle] = useState("");
   const [desc, setdesc] = useState("");
+  const [casetype, setcasetype] = useState("");
 
   const dispatch = useDispatch();
   const updateCase = () =>
-    dispatch(file_case({ case_title: title, case_desc: desc }));
+    dispatch(
+      file_case({ case_title: title, case_desc: desc, case_type: casetype })
+    );
   return (
     <Box>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        label="Case Type"
+        autoFocus
+        onChange={(e) => {
+          setcasetype(e.target.value);
+        }}
+      />
       <TextField
         variant="outlined"
         margin="normal"

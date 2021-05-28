@@ -17,6 +17,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import AboutLawyer from "../../AboutLawyer";
+
 export default function CustomizedTables({ value }) {
   console.log("HHHHHHHHHHHHHHHHH");
   const C_id = useSelector((state) => state.Reducer.clientId);
@@ -25,6 +27,9 @@ export default function CustomizedTables({ value }) {
   const [open, setOpen] = useState(false);
   const [caseIdforFindlawyer, setFindlawyerForCase] = useState(false);
   const [caseIdforPayFEE, setCaseidforPayfee] = useState(false);
+  const [lawyerid, setlawyerid] = useState("");
+  const LawyerModalHandler = () => setlawyermodal((state) => !state);
+  const [lawyermodalopen, setlawyermodal] = useState(false);
 
   const [lawyerRows, setlawyerRows] = useState([]);
   const payFeefunction = (id) => {
@@ -148,7 +153,17 @@ export default function CustomizedTables({ value }) {
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         {row.lawyer_req_accept ? (
-                          <p>{row.lawyer_id}</p>
+                          <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => {
+                              setlawyerid(row.lawyer_id);
+
+                              setlawyermodal(true);
+                            }}
+                          >
+                            Lawyer Details{" "}
+                          </Button>
                         ) : (
                           <p></p>
                         )}
@@ -306,6 +321,13 @@ export default function CustomizedTables({ value }) {
             </div>
           )}
         </Box>
+      )}
+      {lawyermodalopen && (
+        <AboutLawyer
+          Handler={LawyerModalHandler}
+          lawyermodalopen
+          lawyerid={lawyerid}
+        />
       )}
     </Box>
   );
