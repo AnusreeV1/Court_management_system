@@ -10,6 +10,8 @@ import HearingsTable from "./components/HearingsTable";
 import ExpiredTable from "./components/ExpiredTable";
 import OngoingTable from "./components/OngoingTable";
 import CaseAgainstTable from "./components/CaseAgainstTable";
+import FailedCases from "./components/FailedCases";
+
 import Info from "./components/Info";
 export default function ClientsPage() {
   const classes = useStyles();
@@ -37,6 +39,8 @@ export default function ClientsPage() {
           <Tab label="Ongoing Cases" {...a11yProps(3)} />
           <Tab label="Expired Cases" {...a11yProps(4)} />
           <Tab label="Case Against" {...a11yProps(5)} />
+          <Tab label="Failed Cases" {...a11yProps(6)} />
+
         </Tabs>
         <TabPanel className={classes.table} value={value} index={0}>
           <Info />
@@ -53,9 +57,12 @@ export default function ClientsPage() {
         <TabPanel className={classes.table} value={value} index={4}>
           <ExpiredTable />
         </TabPanel>
-        
+
         <TabPanel className={classes.table} value={value} index={5}>
           <CaseAgainstTable />
+        </TabPanel>
+        <TabPanel className={classes.table} value={value} index={6}>
+          <FailedCases />
         </TabPanel>
       </div>
     </div>

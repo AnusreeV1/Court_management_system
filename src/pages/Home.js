@@ -6,12 +6,13 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Carousal from "./Carousel";
 export default function Home() {
   const classes = useStyles();
   // console.log(useSelector((state) => state));
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.a}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             COURT MANAGEMNET SYSTEM
@@ -38,10 +39,14 @@ export default function Home() {
           </Button>
         </Toolbar>
       </AppBar>
+      <Carousal />
     </div>
   );
 }
 const useStyles = makeStyles((theme) => ({
+  a: {
+    backgroundColor: "black",
+  },
   root: {
     flexGrow: 1,
   },

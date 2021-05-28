@@ -10,19 +10,33 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Button, Box } from "@material-ui/core";
+import AboutLawyer from "../../AboutLawyer";
+import AboutCourt from "../../AboutCourt";
+import AboutJudge from "../../AboutJudge";
 import AboutCase from "../../AboutCase";
+import AboutClient from "../../AboutClient";
+
 export default function CustomizedTables() {
   const classes = useStyles();
   const C_id = useSelector((state) => state.Reducer.clientId);
   const [rows, setrows] = useState([]);
   const [defrows, setdefrows] = useState([]);
 
-  const [caseid, setcaseid] = useState("");
+  const [lawyermodalopen, setlawyermodal] = useState(false);
+  const [courtmodalopen, setcourtmodal] = useState(false);
+  const [judgemodalopen, setjudgemodal] = useState(false);
   const [casemodal, setcasemodal] = useState(false);
-
-  const casemodalHandler = () => {
-    setcasemodal((state) => !state);
-  };
+  const [clientmodal, setclientmodal] = useState(false);
+  const [clientid, setclientid] = useState("");
+  const [lawyerid, setlawyerid] = useState("");
+  const [courtid, setCourtid] = useState("");
+  const [judgeid, setjudgeid] = useState("");
+  const [caseid, setcaseid] = useState("");
+  const ClientModalHandler = () => setclientmodal((state) => !state);
+  const casemodalHandler = () => setcasemodal((state) => !state);
+  const JudgemodalHandler = () => setjudgemodal((state) => !state);
+  const CourtModalHandler = () => setcourtmodal((state) => !state);
+  const LawyerModalHandler = () => setlawyermodal((state) => !state);
 
   useEffect(() => {
     const f = () => {
@@ -64,11 +78,20 @@ export default function CustomizedTables() {
                 <TableRow>
                   <StyledTableCell align="center">CASE ID </StyledTableCell>
 
+                  <StyledTableCell align="center">JUDGEMENT </StyledTableCell>
                   <StyledTableCell align="center">
-                    CASE DESCRIPTION
+                    ABOUT CLIENT{" "}
                   </StyledTableCell>
+                  <StyledTableCell align="center">
+                    ABOUT CLIENT LAWYER{" "}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    ABOUT MY LAWYER{" "}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">ABOUT COURT </StyledTableCell>
+                  <StyledTableCell align="center">ABOUT JUDGE </StyledTableCell>
                   <StyledTableCell align="center">ABOUT CASE </StyledTableCell>
-                  <StyledTableCell align="center">STATUS</StyledTableCell>
+                  <StyledTableCell align="center">WINNER</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -78,23 +101,90 @@ export default function CustomizedTables() {
                       {row.case_id}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {row.case_desc}
+                      {row.judgement}
                     </StyledTableCell>
 
                     <StyledTableCell align="center">
                       <Button
-                        variant={"outlined"}
-                        color={"secondary"}
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          setclientmodal(true);
+                          setclientid(row.client_id);
+                        }}
+                      >
+                        {" "}
+                        CLICK HERE{" "}
+                      </Button>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          setlawyerid(row.lawyer_id);
+
+                          setlawyermodal(true);
+                        }}
+                      >
+                        Lawyer Details{" "}
+                      </Button>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          setlawyerid(row.def_lawyer_id);
+
+                          setlawyermodal(true);
+                        }}
+                      >
+                        Details{" "}
+                      </Button>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          setCourtid(row.court_id);
+
+                          setcourtmodal(true);
+                        }}
+                      >
+                        Court Details{" "}
+                      </Button>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          setjudgeid(row.judge_id);
+
+                          setjudgemodal(true);
+                        }}
+                      >
+                        Judge Details{" "}
+                      </Button>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        variant="outlined"
+                        color="secondary"
                         onClick={() => {
                           setcaseid(row.case_id);
 
                           setcasemodal(true);
                         }}
                       >
-                        CLICK HERE{" "}
+                        Case Details{" "}
                       </Button>
                     </StyledTableCell>
-                    <StyledTableCell align="center">EXPIRED </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.winner == C_id ? <p>ME </p> : <p>CLIENT</p>}{" "}
+                    </StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
@@ -115,13 +205,26 @@ export default function CustomizedTables() {
                   <TableRow>
                     <StyledTableCell align="center">CASE ID </StyledTableCell>
 
+                    <StyledTableCell align="center">JUDGEMENT</StyledTableCell>
                     <StyledTableCell align="center">
-                      CASE DESCRIPTION
+                      ABOUT DEFENDER
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      ABOUT DEFENDER LAWYER{" "}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      ABOUT MY LAWYER{" "}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      ABOUT COURT{" "}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      ABOUT JUDGE{" "}
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       ABOUT CASE{" "}
                     </StyledTableCell>
-                    <StyledTableCell align="center">STATUS</StyledTableCell>
+                    <StyledTableCell align="center">WINNER</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -131,23 +234,90 @@ export default function CustomizedTables() {
                         {row.case_id}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {row.case_desc}
+                        {row.judgement}
                       </StyledTableCell>
 
                       <StyledTableCell align="center">
                         <Button
-                          variant={"outlined"}
-                          color={"secondary"}
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => {
+                            setclientmodal(true);
+                            setclientid(row.def_id);
+                          }}
+                        >
+                          {" "}
+                          CLICK HERE{" "}
+                        </Button>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => {
+                            setlawyerid(row.def_lawyer_id);
+
+                            setlawyermodal(true);
+                          }}
+                        >
+                          Lawyer Details{" "}
+                        </Button>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => {
+                            setlawyerid(row.lawyer_id);
+
+                            setlawyermodal(true);
+                          }}
+                        >
+                          Lawyer Details{" "}
+                        </Button>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => {
+                            setCourtid(row.court_id);
+
+                            setcourtmodal(true);
+                          }}
+                        >
+                          Court Details{" "}
+                        </Button>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => {
+                            setjudgeid(row.judge_id);
+
+                            setjudgemodal(true);
+                          }}
+                        >
+                          Judge Details{" "}
+                        </Button>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button
+                          variant="outlined"
+                          color="secondary"
                           onClick={() => {
                             setcaseid(row.case_id);
 
                             setcasemodal(true);
                           }}
                         >
-                          CLICK HERE{" "}
+                          Case Details{" "}
                         </Button>
                       </StyledTableCell>
-                      <StyledTableCell align="center">EXPIRED </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.winner == C_id ? <p>ME </p> : <p>DEFENDENT</p>}{" "}
+                      </StyledTableCell>
                     </StyledTableRow>
                   ))}
                 </TableBody>
@@ -156,6 +326,35 @@ export default function CustomizedTables() {
           </div>
         )}
       </div>
+      {lawyermodalopen && (
+        <AboutLawyer
+          Handler={LawyerModalHandler}
+          lawyermodalopen
+          lawyerid={lawyerid}
+        />
+      )}
+      {clientmodal && (
+        <AboutClient
+          open={clientmodal}
+          Handler={() => ClientModalHandler()}
+          id={clientid}
+        />
+      )}
+      {judgemodalopen && (
+        <AboutJudge
+          Handler={JudgemodalHandler}
+          judgemodal={judgemodalopen}
+          judgeid={judgeid}
+        />
+      )}
+      {courtmodalopen && (
+        <AboutCourt
+          Handler={CourtModalHandler}
+          courtmodalopen
+          courtid={courtid}
+        />
+      )}
+
       {casemodal && (
         <AboutCase
           Handler={() => casemodalHandler()}
