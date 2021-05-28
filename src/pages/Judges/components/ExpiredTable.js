@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -7,55 +7,207 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { Button } from "@material-ui/core";
+import AboutLawyer from "../../AboutLawyer";
+import AboutCourt from "../../AboutCourt";
+import AboutJudge from "../../AboutJudge";
+import AboutCase from "../../AboutCase";
+import AboutClient from "../../AboutClient";
 
 export default function CustomizedTables() {
   const classes = useStyles();
+  const J_id = useSelector((state) => state.Reducer.judgeId);
+  console.log(J_id);
+  const [rows, setrows] = useState([]);
+  const [lawyermodalopen, setlawyermodal] = useState(false);
+  const [courtmodalopen, setcourtmodal] = useState(false);
+  const [judgemodalopen, setjudgemodal] = useState(false);
+  const [casemodal, setcasemodal] = useState(false);
+  const [clientmodal, setclientmodal] = useState(false);
+  const [clientid, setclientid] = useState("");
+  const [lawyerid, setlawyerid] = useState("");
+  const [courtid, setCourtid] = useState("");
+  const [judgeid, setjudgeid] = useState("");
+  const [caseid, setcaseid] = useState("");
+  const ClientModalHandler = () => setclientmodal((state) => !state);
+  const casemodalHandler = () => setcasemodal((state) => !state);
+  const JudgemodalHandler = () => setjudgemodal((state) => !state);
+  const CourtModalHandler = () => setcourtmodal((state) => !state);
+  const LawyerModalHandler = () => setlawyermodal((state) => !state);
 
+  useEffect(() => {
+    const Expiredlist = () => {
+      axios.post("/judge/expired", { judge_id: J_id }).then((response) => {
+        // console.log(response.data);
+        setrows(response.data);
+      });
+    };
+    Expiredlist();
+  }, []);
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell align="center">Calories</StyledTableCell>
+    <div>
+      {lawyermodalopen && (
+        <AboutLawyer
+          Handler={LawyerModalHandler}
+          lawyermodalopen
+          lawyerid={lawyerid}
+        />
+      )}
+      {clientmodal && (
+        <AboutClient
+          open={clientmodal}
+          Handler={() => ClientModalHandler()}
+          id={clientid}
+        />
+      )}
+      {judgemodalopen && (
+        <AboutJudge
+          Handler={JudgemodalHandler}
+          judgemodal={judgemodalopen}
+          judgeid={judgeid}
+        />
+      )}
+      {courtmodalopen && (
+        <AboutCourt
+          Handler={CourtModalHandler}
+          courtmodalopen
+          courtid={courtid}
+        />
+      )}
 
-            <StyledTableCell align="center">Calories</StyledTableCell>
-            <StyledTableCell align="center">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="center">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="center">Protein&nbsp;(g)</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="center">{row.calories}</StyledTableCell>
-              <StyledTableCell align="center">{row.fat}</StyledTableCell>
-              <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="center">{row.protein}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+      {casemodal && (
+        <AboutCase
+          Handler={() => casemodalHandler()}
+          caseid={caseid}
+          casemodal={casemodal}
+        />
+      )}
+      {rows.length != 0 ? (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="center">CASE ID </StyledTableCell>
+
+                <StyledTableCell align="center">ABOUT CLIENT</StyledTableCell>
+                <StyledTableCell align="center">
+                  ABOUT DEFENDENT{" "}
+                </StyledTableCell>
+                <StyledTableCell align="center">CLIENT LAWYER</StyledTableCell>
+                <StyledTableCell align="center">
+                  DEFENDENT LAWYER
+                </StyledTableCell>
+                <StyledTableCell align="center">ABOUT COURT </StyledTableCell>
+
+                <StyledTableCell align="center">ABOUT CASE </StyledTableCell>
+                <StyledTableCell align="center">JUDGEMENT </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <StyledTableRow key={row.case_id}>
+                  <StyledTableCell align="center">
+                    {row.case_id}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        setclientmodal(true);
+                        setclientid(row.client_id);
+                      }}
+                    >
+                      {" "}
+                      CLICK HERE{" "}
+                    </Button>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        setclientmodal(true);
+                        setclientid(row.def_client_id);
+                      }}
+                    >
+                      {" "}
+                      CLICK HERE{" "}
+                    </Button>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        setlawyerid(row.lawyer_id);
+
+                        setlawyermodal(true);
+                      }}
+                    >
+                      Lawyer Details{" "}
+                    </Button>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        setlawyerid(row.def_lawyer_id);
+
+                        setlawyermodal(true);
+                      }}
+                    >
+                      Lawyer Details{" "}
+                    </Button>
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        setCourtid(row.court_id);
+
+                        setcourtmodal(true);
+                      }}
+                    >
+                      Court Details{" "}
+                    </Button>
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => {
+                        setcaseid(row.case_id);
+
+                        setcasemodal(true);
+                      }}
+                    >
+                      Case Details{" "}
+                    </Button>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.judgement}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <h1>NO EXPIRED CASES </h1>
+      )}
+    </div>
   );
 }
 const useStyles = makeStyles({
   table: {
-    minWidth:700,
+    minWidth: 700,
   },
 });
 const StyledTableCell = withStyles((theme) => ({
