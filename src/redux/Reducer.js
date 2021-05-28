@@ -10,7 +10,7 @@ const initialState = {
     court_id: "",
     case_title: "",
     case_desc: "",
-    case_type: "civil",
+    case_type: "",
     def_client_name: "",
     def_client_email: "",
   },

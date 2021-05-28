@@ -10,7 +10,7 @@ const Appbar = ({ state ,heading}) => {
   const classes = useStyles();
 
   return (
-    <MyAppbar position="static">
+    <MyAppbar position="static" className={classes.a}>
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           COURT MANAGEMNET SYSTEM
@@ -36,6 +36,9 @@ const Appbar = ({ state ,heading}) => {
   );
 };
 const useStyles = makeStyles((theme) => ({
+  a: {
+    backgroundColor: "black",
+  },
   root: {
     flexGrow: 1,
   },

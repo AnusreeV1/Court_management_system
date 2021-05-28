@@ -74,7 +74,9 @@ export default function CustomizedTables() {
                   <StyledTableCell align="center">
                     {row.court_address}
                   </StyledTableCell>
-                  <StyledTableCell align="center">{row.court_type}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.court_type}
+                  </StyledTableCell>
 
                   <StyledTableCell align="center">
                     <Button

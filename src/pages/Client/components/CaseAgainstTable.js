@@ -53,7 +53,7 @@ export default function CustomizedTables() {
         lawyer_id: id,
         client_id: C_id,
       })
-      .then((res) => setFindlawyerForCase(!res.data));
+      .then((res) => setFindlawyerForCase(false));
   };
   const findlawyer = () => {
     axios
@@ -128,37 +128,47 @@ export default function CustomizedTables() {
                     </Button>
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                    {row.def_lawyer_req_accept ? (
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => {
-                          setCaseidforPayfee(row.case_id);
-                          payFeefunction(row.case_id);
-                        }}
-                      >
-                        PAY FEE
-                      </Button>
-                    ) : (
-                      <div>
-                        {row.def_lawyer_req_send ? (
-                          <Button variant="outlined" color="primary">
-                            REQUEST PENDING{" "}
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            onClick={() => {
-                              setFindlawyerForCase(row.case_id);
-                              findlawyer();
-                            }}
-                          >
-                            Find Lawyer
-                          </Button>
-                        )}
-                      </div>
-                    )}
+                    <div>
+                      {row.def_fees_paid ? (
+                        <Button variant="outlined" color="primary" disabled>
+                          FEES PAID{" "}
+                        </Button>
+                      ) : (
+                        <div>
+                          {row.def_lawyer_req_accept ? (
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              onClick={() => {
+                                setCaseidforPayfee(row.case_id);
+                                payFeefunction(row.case_id);
+                              }}
+                            >
+                              PAY FEE
+                            </Button>
+                          ) : (
+                            <div>
+                              {row.def_lawyer_req_send ? (
+                                <Button variant="outlined" color="primary">
+                                  REQUEST PENDING{" "}
+                                </Button>
+                              ) : (
+                                <Button
+                                  variant="outlined"
+                                  color="primary"
+                                  onClick={() => {
+                                    setFindlawyerForCase(row.case_id);
+                                    findlawyer();
+                                  }}
+                                >
+                                  Find Lawyer
+                                </Button>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
@@ -170,57 +180,72 @@ export default function CustomizedTables() {
       <div>
         <br></br>
         <br></br>
+        {caseIdforFindlawyer && (
+          <div>
+            {lawyerRows.length != 0 && (
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell align="center">
+                        LAWYER ID
+                      </StyledTableCell>
 
-        {lawyerRows.length != 0 && (
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">LAWYER ID</StyledTableCell>
+                      <StyledTableCell align="center">
+                        LAWYER NAME
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        MOBILE NO.{" "}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">EMAIL </StyledTableCell>
+                      <StyledTableCell align="center">
+                        CASES WON{" "}
+                      </StyledTableCell>
+                      <StyledTableCell align="center"> </StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {lawyerRows.map((lawyerRows) => (
+                      <StyledTableRow key={lawyerRows.lawyer_id}>
+                        <StyledTableCell
+                          component="th"
+                          scope="row"
+                          align="center"
+                        >
+                          {lawyerRows.lawyer_id}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {lawyerRows.lawyer_name}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {lawyerRows.mobile_no}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {lawyerRows.email}
+                        </StyledTableCell>
 
-                  <StyledTableCell align="center">LAWYER NAME</StyledTableCell>
-                  <StyledTableCell align="center">MOBILE NO. </StyledTableCell>
-                  <StyledTableCell align="center">EMAIL </StyledTableCell>
-                  <StyledTableCell align="center">CASES WON </StyledTableCell>
-                  <StyledTableCell align="center"> </StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {lawyerRows.map((lawyerRows) => (
-                  <StyledTableRow key={lawyerRows.lawyer_id}>
-                    <StyledTableCell component="th" scope="row" align="center">
-                      {lawyerRows.lawyer_id}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {lawyerRows.lawyer_name}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {lawyerRows.mobile_no}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {lawyerRows.email}
-                    </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {lawyerRows.cases_won}
+                        </StyledTableCell>
 
-                    <StyledTableCell align="center">
-                      {lawyerRows.cases_won}
-                    </StyledTableCell>
-
-                    <StyledTableCell align="center">
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => {
-                          sendLawyerRequest(lawyerRows.lawyer_id);
-                        }}
-                      >
-                        Send Request{" "}
-                      </Button>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                        <StyledTableCell align="center">
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={() => {
+                              sendLawyerRequest(lawyerRows.lawyer_id);
+                            }}
+                          >
+                            Send Request{" "}
+                          </Button>
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+          </div>
         )}
       </div>
 
