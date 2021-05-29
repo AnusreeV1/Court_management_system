@@ -12,6 +12,7 @@ import axios from "axios";
 import { Box } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import AboutCase from "../../AboutCase";
+import AboutClient from '../../AboutClient';
 
 
 export default function CustomizedTables() {
@@ -21,6 +22,8 @@ export default function CustomizedTables() {
   const [drows, setdrows] = useState([]);
   const [caseid, setcaseid] = useState("");
   const [casemodal, setcasemodal] = useState(false);
+  const [clientid, setclientid] = useState("");
+  const [clientmodal, setclientmodal] = useState(false);
 
   const useStyles = makeStyles({
     table: {
@@ -61,6 +64,10 @@ export default function CustomizedTables() {
     setcasemodal((state) => !state);
   };
 
+  const clientmodalHandler = () => {
+    setclientmodal((state) => !state);
+  };
+
   const classes = useStyles();
   return (
       <div>
@@ -88,6 +95,7 @@ export default function CustomizedTables() {
             <StyledTableCell align="center">COURT ID</StyledTableCell>
             <StyledTableCell align="center">JUDGE ID</StyledTableCell>
             <StyledTableCell align="center"></StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -113,6 +121,18 @@ export default function CustomizedTables() {
                 Case details
               </Button>
               </StyledTableCell>
+              <StyledTableCell align="center">
+              <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                      clientmodalHandler();
+                      setclientid(row.client_id);
+                  }}
+              >
+                Client details
+              </Button>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -123,6 +143,13 @@ export default function CustomizedTables() {
       Handler={() => casemodalHandler()}
       caseid={caseid}
       casemodal={casemodal}
+    />
+  )}
+  {clientmodal && (
+    <AboutClient
+      Handler={() => clientmodalHandler()}
+      open={clientmodal}
+      id={clientid}
     />
   )}
               <br></br>
@@ -149,6 +176,7 @@ export default function CustomizedTables() {
             <StyledTableCell align="center">COURT ID</StyledTableCell>
             <StyledTableCell align="center">JUDGE ID</StyledTableCell>
             <StyledTableCell align="center"></StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -172,6 +200,18 @@ export default function CustomizedTables() {
                   }}
               >
                 Case details
+              </Button>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+              <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                      clientmodalHandler();
+                      setclientid(row.client_id);
+                  }}
+              >
+                Client details
               </Button>
               </StyledTableCell>
             </StyledTableRow>

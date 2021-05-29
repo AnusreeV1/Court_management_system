@@ -18,6 +18,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import AboutLawyer from "../../AboutLawyer";
+import Payment from './Payment';
 
 export default function CustomizedTables({ value }) {
   console.log("HHHHHHHHHHHHHHHHH");
@@ -30,9 +31,15 @@ export default function CustomizedTables({ value }) {
   const [lawyerid, setlawyerid] = useState("");
   const LawyerModalHandler = () => setlawyermodal((state) => !state);
   const [lawyermodalopen, setlawyermodal] = useState(false);
-
   const [lawyerRows, setlawyerRows] = useState([]);
+  const [pay,setPay] = useState(false);
+
+  const paymentPortal = () => {
+    setPay((state) => !state);
+  };
+
   const payFeefunction = (id) => {
+    //console.log(id);
     axios
       .post("/client/client_pay_fees", {
         case_id: id,
@@ -40,6 +47,7 @@ export default function CustomizedTables({ value }) {
       })
       .then((res) => setCaseidforPayfee(true));
   };
+
   const sendLawyerRequest = (id) => {
     axios
       .post("/client/plaint_request_lawyer", {
@@ -73,7 +81,7 @@ export default function CustomizedTables({ value }) {
     };
     plaintList();
     return () => console.log("INFO UNMOUNTED");
-  }, [open, caseIdforFindlawyer, caseIdforPayFEE]);
+  }, [open, caseIdforFindlawyer, caseIdforPayFEE, pay]);
 
   const classes = useStyles();
 
@@ -179,7 +187,9 @@ export default function CustomizedTables({ value }) {
                                 color="secondary"
                                 onClick={() => {
                                   setCaseidforPayfee(row.case_id);
-                                  payFeefunction(row.case_id);
+                                  paymentPortal();
+                                  //payFeefunction(row.case_id);
+
                                 }}
                               >
                                 PAY FEE{" "}
@@ -327,6 +337,14 @@ export default function CustomizedTables({ value }) {
           Handler={LawyerModalHandler}
           lawyermodalopen
           lawyerid={lawyerid}
+        />
+      )}
+      {pay && (
+        <Payment
+          Handler={paymentPortal}
+          open ={pay}
+          caseid={caseIdforPayFEE}
+          clientid={C_id}
         />
       )}
     </Box>

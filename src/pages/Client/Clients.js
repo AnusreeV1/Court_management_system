@@ -11,6 +11,7 @@ import ExpiredTable from "./components/ExpiredTable";
 import OngoingTable from "./components/OngoingTable";
 import CaseAgainstTable from "./components/CaseAgainstTable";
 import FailedCases from "./components/FailedCases";
+import Payment from './components/Payment';
 
 import Info from "./components/Info";
 export default function ClientsPage() {

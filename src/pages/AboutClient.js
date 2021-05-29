@@ -54,7 +54,7 @@ export default function SimpleModal({ Handler, open, id }) {
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
                       <h1>
-                        <p>  DETAILS</p>
+                        <p> CLIENT DETAILS</p>
                       </h1>
                       <h3>
                         ID :{" "}

@@ -335,8 +335,9 @@ export default function CustomizedTables({ value }) {
        {casemodalopen && (
         <AboutCase
           Handler={CaseModalHandler}
-          casemodel={casemodalopen}
           caseid={caseid}
+          casemodel={casemodalopen}
+          
         />
       )}
         </Box>

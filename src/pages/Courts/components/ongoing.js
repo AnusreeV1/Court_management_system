@@ -28,6 +28,7 @@ import AboutCourt from "../../AboutCourt";
 import AboutJudge from "../../AboutJudge";
 import AboutClient from "../../AboutClient";
 import AboutCase from "../../AboutCase";
+import JudgementModal from "../components/judgement_modal";
 
 
 //var changed=true;
@@ -68,6 +69,9 @@ export default function CustomizedTables({ Handler, open }) {
     const CaseModalHandler = () => {
       setcasemodal((state) => !state);
     };
+    const JudgementHandler = () =>{
+      setOpen((state) => !state);
+    }
   
      
     //const [feesVerified,setFeesVerified] = useState(false);
@@ -116,80 +120,80 @@ export default function CustomizedTables({ Handler, open }) {
       }))(TableRow);
 
      
-     const handleSubmit=(row)=>{
-         axios.post("/admin/updateJudgement",{
-         "case_id":case_details.case_id,"judgement":judgement,"winner":wonLID,"client_id":case_details.client_id,"lawyer_id":case_details.lawyer_id,"def_client_id":case_details.def_id,"def_lawyer_id":case_details.def_lawyer_id,"court_id":case_details.court_id,"judge_id":case_details.judge_id,}
-         )
-         setchanged(true);
+    //  const handleSubmit=(row)=>{
+    //      axios.post("/admin/updateJudgement",{
+    //      "case_id":case_details.case_id,"judgement":judgement,"winner":wonLID,"client_id":case_details.client_id,"lawyer_id":case_details.lawyer_id,"def_client_id":case_details.def_id,"def_lawyer_id":case_details.def_lawyer_id,"court_id":case_details.court_id,"judge_id":case_details.judge_id,}
+    //      )
+    //      setchanged(true);
 
-     }
+    //  }
      const openModel =()=>{
          setOpen(true);
      }
      const closeModel = ()=>{
          setOpen(false);
      }
-     const GiveJudgement=()=>{
-        return (
-            <div>
-                    <Modal 
-                        show={isOpen} 
-                        handleClose={e => closeModel()}
-                        backdrop="static"
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Case Judgement</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body classes={useStyles.paper}>
-                        <form className={classes.form} noValidate>
-                                <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="judgement"
-                                label="Judgement"
-                                name="judgement"
-                                autoComplete="judgement"
-                                value={judgement}
-                                autoFocus
-                                onChange={(e) => {
-                                    setJudgement(e.target.value);
-                                }}
+    //  const GiveJudgement=()=>{
+    //     return (
+    //         <div>
+    //                 <Modal 
+    //                     show={isOpen} 
+    //                     handleClose={e => closeModel()}
+    //                     backdrop="static"
+    //                 >
+    //                     <Modal.Header closeButton>
+    //                         <Modal.Title>Case Judgement</Modal.Title>
+    //                     </Modal.Header>
+    //                     <Modal.Body classes={useStyles.paper}>
+    //                     <form className={classes.form} noValidate>
+    //                             <TextField
+    //                             variant="outlined"
+    //                             margin="normal"
+    //                             required
+    //                             fullWidth
+    //                             id="judgement"
+    //                             label="Judgement"
+    //                             name="judgement"
+    //                             autoComplete="judgement"
+    //                             value={judgement}
+    //                             autoFocus
+    //                             onChange={(e) => {
+    //                                 setJudgement(e.target.value);
+    //                             }}
                                 
-                                />
-                                <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="Winner"
-                                label="won lawyer id"
-                                type="text"
-                                id="winner"
-                                autoComplete="winner"
-                                value={wonLID}
-                                onChange={(e) => {
-                                    setWinner(e.target.value);
-                                }}
-                                />
+    //                             />
+    //                             <TextField
+    //                             variant="outlined"
+    //                             margin="normal"
+    //                             required
+    //                             fullWidth
+    //                             name="Winner"
+    //                             label="won lawyer id"
+    //                             type="text"
+    //                             id="winner"
+    //                             autoComplete="winner"
+    //                             value={wonLID}
+    //                             onChange={(e) => {
+    //                                 setWinner(e.target.value);
+    //                             }}
+    //                             />
                                 
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}
-                                    onClick={()=>{handleSubmit()}}
-                                >
-                                    Give judgement
-                                </Button>
-                            </form>
-                        </Modal.Body>
-                    </Modal>
-            </div>
-          );
+    //                             <Button
+    //                                 fullWidth
+    //                                 variant="contained"
+    //                                 color="primary"
+    //                                 className={classes.submit}
+    //                                 onClick={()=>{handleSubmit()}}
+    //                             >
+    //                                 Give judgement
+    //                             </Button>
+    //                         </form>
+    //                     </Modal.Body>
+    //                 </Modal>
+    //         </div>
+    //       );
 
-     }
+    //  }
 
     
       
@@ -323,8 +327,8 @@ export default function CustomizedTables({ Handler, open }) {
                       </StyledTableCell>
                       <StyledTableCell align="center">
                       <Button variant="outlined" color="primary" onClick={()=>{
-                          setCaseDetails(row);
-                          console.log("hhhhhhh");
+                          // setCaseDetails(row);
+                          // console.log("hhhhhhh");
                           setOpen(true);
                           
                       }}>Give Judgement
@@ -341,7 +345,7 @@ export default function CustomizedTables({ Handler, open }) {
                       
                       
         )}
-        {isOpen?<GiveJudgement/>:null}
+        {/* {isOpen?<GiveJudgement/>:null} */}
         {judgemodalopen && (
         <AboutJudge
           Handler={JudgemodalHandler}
@@ -377,6 +381,14 @@ export default function CustomizedTables({ Handler, open }) {
           caseid={caseid}
         />
       )}
+       {isOpen && (
+        <JudgementModal
+          Handler={JudgementHandler}
+          open
+          case_details
+        />
+      )}
+
         </Box>
       
 )

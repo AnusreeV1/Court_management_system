@@ -12,7 +12,7 @@ import axios from "axios";
 import { Box } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import AboutCase from "../../AboutCase";
-
+import AboutClient from '../../AboutClient';
 
 export default function CustomizedTables() {
   //const classes = useStyles();
@@ -20,6 +20,8 @@ export default function CustomizedTables() {
   const [rows, setrows] = useState([]);
   const [caseid, setcaseid] = useState("");
   const [casemodal, setcasemodal] = useState(false);
+  const [clientid, setclientid] = useState("");
+  const [clientmodal, setclientmodal] = useState(false);
 
   const useStyles = makeStyles({
     table: {
@@ -55,6 +57,9 @@ export default function CustomizedTables() {
   const casemodalHandler = () => {
     setcasemodal((state) => !state);
   };
+  const clientmodalHandler = () => {
+    setclientmodal((state) => !state);
+  };
 
   const meritStatus = (status) => {
     if(status == 1)
@@ -73,6 +78,13 @@ export default function CustomizedTables() {
       Handler={() => casemodalHandler()}
       caseid={caseid}
       casemodal={casemodal}
+    />
+  )}
+  {clientmodal && (
+    <AboutClient
+      Handler={() => clientmodalHandler()}
+      open={clientmodal}
+      id={clientid}
     />
   )}
         <Paper className={classes.paper}>
@@ -98,6 +110,7 @@ export default function CustomizedTables() {
             <StyledTableCell align="center">CLIENT ID</StyledTableCell>
             <StyledTableCell align="center">JUDGE ID</StyledTableCell>
             <StyledTableCell align="center">MERIT STATUS</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
             <StyledTableCell align="center"></StyledTableCell>
           </TableRow>
         </TableHead>
@@ -125,6 +138,18 @@ export default function CustomizedTables() {
                 }}
               >
                 Case details
+              </Button>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+              <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                      clientmodalHandler();
+                      setclientid(row.client_id);
+                  }}
+              >
+                Client details
               </Button>
               </StyledTableCell>
             </StyledTableRow>

@@ -13,6 +13,7 @@ import { Box } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { PassThrough } from "stream";
 import AboutCase from "../../AboutCase";
+import AboutClient from '../../AboutClient';
 
 export default function CustomizedTables() {
   //const classes = useStyles();
@@ -22,6 +23,8 @@ export default function CustomizedTables() {
   const [c, setc] = useState(false);
   const [caseid, setcaseid] = useState("");
   const [casemodal, setcasemodal] = useState(false);
+  const [clientid, setclientid] = useState("");
+  const [clientmodal, setclientmodal] = useState(false);
 
   const useStyles = makeStyles({
     table: {
@@ -60,6 +63,10 @@ export default function CustomizedTables() {
 
   const casemodalHandler = () => {
     setcasemodal((state) => !state);
+  };
+
+  const clientmodalHandler = () => {
+    setclientmodal((state) => !state);
   };
 
   const accept = (case_id,client_id) => {
@@ -117,6 +124,13 @@ const acceptance_status=(s,row)=>{
       casemodal={casemodal}
     />
   )}
+  {clientmodal && (
+    <AboutClient
+      Handler={() => clientmodalHandler()}
+      open={clientmodal}
+      id={clientid}
+    />
+  )}
         <Paper className={classes.paper}>
           <Box align="center">
             <h1>CLIENT REQUESTS</h1>
@@ -138,6 +152,7 @@ const acceptance_status=(s,row)=>{
             <StyledTableCell align="center">CASE TITLE</StyledTableCell>
             <StyledTableCell align="center">COURT ID</StyledTableCell>
             <StyledTableCell align="center">CLIENT ID</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
             <StyledTableCell align="center"></StyledTableCell>
             <StyledTableCell align="center"></StyledTableCell>
           </TableRow>
@@ -162,6 +177,18 @@ const acceptance_status=(s,row)=>{
                 }}
               >
                 Case details
+              </Button>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+              <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                      clientmodalHandler();
+                      setclientid(row.client_id);
+                  }}
+              >
+                Client details
               </Button>
               </StyledTableCell>
               <StyledTableCell align="center">
@@ -223,6 +250,7 @@ const acceptance_status=(s,row)=>{
             <StyledTableCell align="center">CLIENT ID</StyledTableCell>
             <StyledTableCell align="center"></StyledTableCell>
             <StyledTableCell align="center"></StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -245,6 +273,18 @@ const acceptance_status=(s,row)=>{
                 }}
               >
                 Case details
+              </Button>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+              <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                      clientmodalHandler();
+                      setclientid(row.client_id);
+                  }}
+              >
+                Client details
               </Button>
               </StyledTableCell>
               <StyledTableCell align="center">
