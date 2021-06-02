@@ -16,7 +16,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
-export default function SimpleModal({ Handler, caseid, judgesModal }) {
+export default function SimpleModal({ Handler, caseid,clientid, judgesModal }) {
 
   //console.log(caseid);
   const classes = useStyles();
@@ -37,7 +37,8 @@ export default function SimpleModal({ Handler, caseid, judgesModal }) {
   }, []);
 
   const assign = (judge_id) => {
-    axios.post("/admin/judgeAssign",{judge_id:judge_id,case_id:caseid}).then((response) => {
+    console.log(clientid);
+    axios.post("/admin/judgeAssign",{judge_id:judge_id,case_id:caseid,client_id:clientid}).then((response) => {
         console.log(response.data);
       });
   }

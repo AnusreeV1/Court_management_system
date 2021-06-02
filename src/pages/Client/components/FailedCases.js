@@ -119,7 +119,7 @@ export default function CustomizedTables() {
           </Table>
         ) : (
           <div>
-            <h2>NO HEARINGS</h2>
+            <h2>NO FAILED CASES</h2>
           </div>
         )}
       </TableContainer>

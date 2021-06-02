@@ -13,7 +13,7 @@ const Appbar = ({ state ,heading}) => {
     <MyAppbar position="static" className={classes.a}>
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          COURT MANAGEMNET SYSTEM
+          COURT MANAGEMENT SYSTEM
         </Typography>
         <Typography variant="h6" className={classes.title}>
           {heading}

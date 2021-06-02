@@ -15,7 +15,7 @@ export default function Home() {
       <AppBar position="static" className={classes.a}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            COURT MANAGEMNET SYSTEM
+            COURT MANAGEMENT SYSTEM
           </Typography>
           <Button color="inherit">
             <Link to="/clientsauth" className={classes.link}>

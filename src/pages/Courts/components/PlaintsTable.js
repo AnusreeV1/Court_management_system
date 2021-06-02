@@ -57,9 +57,10 @@ export default function CustomizedTables({ value }) {
     const ClientModalHandler = () => {
       setclientmodal((state) => !state);
     };
-    const CaseModalHandler = () => {
+    const casemodalHandler = () => {
       setcasemodal((state) => !state);
     };
+  
   
     const useStyles = makeStyles({
         table: {
@@ -218,9 +219,9 @@ export default function CustomizedTables({ value }) {
                       variant="outlined"
                       color="secondary"
                       onClick={() => {
-                        setclientid(row.client_id);
+                        setcaseid(row.case_id);
 
-                        setclientmodal(true);
+                        setcasemodal(true);
                       }}
                     >
                       Client Details{" "}
@@ -310,14 +311,13 @@ export default function CustomizedTables({ value }) {
           id={clientid}
         />
       )}
-       {casemodalopen && (
-        <AboutCase
-          Handler={CaseModalHandler}
-          caseid={caseid}
-          casemodel={casemodalopen}
-          
-        />
-      )}
+      {casemodalopen && (
+    <AboutCase
+      Handler={() => casemodalHandler()}
+      caseid={caseid}
+      casemodal={casemodalopen}
+    />
+  )}
         </Box>
       
 )

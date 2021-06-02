@@ -57,9 +57,10 @@ export default function CustomizedTables({ value }) {
     const ClientModalHandler = () => {
       setclientmodal((state) => !state);
     };
-    const CaseModalHandler = () => {
+    const casemodalHandler = () => {
       setcasemodal((state) => !state);
     };
+  
   
     const useStyles = makeStyles({
         table: {
@@ -106,7 +107,8 @@ export default function CustomizedTables({ value }) {
             case_title:row.case_title,
             case_desc:row.case_desc,
             case_type:row.case_type,
-            merit_status: merit_status
+            merit_status: merit_status,
+            client_id:row.client_id
         }).then((res) => {
             console.log(res.data);
             setchanged(true);
@@ -252,7 +254,8 @@ export default function CustomizedTables({ value }) {
                         ) : (
                             <div>
                             <Button variant="outlined" color="primary" onClick={()=>{
-                                giveMerit(row.case_id,1,row.def_client_email);
+                              setchanged(true);
+                                giveMerit(row.case_id,1,row.def_client_email,row);
                                 //changed=true;
                                // row.merit_status=1;
                                // useEffect();
@@ -260,6 +263,7 @@ export default function CustomizedTables({ value }) {
                             Merit
                         </Button>
                     <Button variant="outlined" color="secondary" onClick={()=>{
+                      setchanged(true);
                         giveMerit(row.case_id,0,row.def_client_email,row);
                     }}>
                             DeMerit
@@ -332,14 +336,13 @@ export default function CustomizedTables({ value }) {
           id={clientid}
         />
       )}
-       {casemodalopen && (
-        <AboutCase
-          Handler={CaseModalHandler}
-          caseid={caseid}
-          casemodel={casemodalopen}
-          
-        />
-      )}
+     {casemodalopen && (
+    <AboutCase
+      Handler={() => casemodalHandler()}
+      caseid={caseid}
+      casemodal={casemodalopen}
+    />
+  )}
         </Box>
       
 )

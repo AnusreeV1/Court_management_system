@@ -15,6 +15,9 @@ import JudgesPage from "./pages/Judges/Judges";
 import CourtAuth from "./pages/Courts/CourtAuth";
 import CourtPage from "./pages/Courts/Courts";
 
+import SuperAdmin from "./pages/superadmin/sadmin";
+import SadminAuth from "./pages/superadmin/sadminauth";
+
 const Navigation = () => {
   return (
     <Switch>
@@ -44,6 +47,12 @@ const Navigation = () => {
       </Route>
       <Route path="/courts" exact>
         <CourtPage />
+      </Route>
+      <Route path="/sadmin" exact>
+        <SuperAdmin />
+      </Route>
+      <Route path="/sauth" exact>
+        <SadminAuth />
       </Route>
     </Switch>
   );

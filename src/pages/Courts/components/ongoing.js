@@ -66,9 +66,10 @@ export default function CustomizedTables({ Handler, open }) {
     const ClientModalHandler = () => {
       setclientmodal((state) => !state);
     };
-    const CaseModalHandler = () => {
+    const casemodalHandler = () => {
       setcasemodal((state) => !state);
     };
+  
     const JudgementHandler = () =>{
       setOpen((state) => !state);
     }
@@ -327,9 +328,10 @@ export default function CustomizedTables({ Handler, open }) {
                       </StyledTableCell>
                       <StyledTableCell align="center">
                       <Button variant="outlined" color="primary" onClick={()=>{
-                          // setCaseDetails(row);
-                          // console.log("hhhhhhh");
+                           setCaseDetails(row);
+                           console.log("hhhhhhh");
                           setOpen(true);
+                          setchanged(true);
                           
                       }}>Give Judgement
                       </Button> 
@@ -375,17 +377,17 @@ export default function CustomizedTables({ Handler, open }) {
         />
       )}
        {casemodalopen && (
-        <AboutCase
-          Handler={CaseModalHandler}
-          casemodel={casemodalopen}
-          caseid={caseid}
-        />
-      )}
+    <AboutCase
+      Handler={() => casemodalHandler()}
+      caseid={caseid}
+      casemodal={casemodalopen}
+    />
+  )}
        {isOpen && (
         <JudgementModal
           Handler={JudgementHandler}
           open
-          case_details
+          case_details={case_details}
         />
       )}
 

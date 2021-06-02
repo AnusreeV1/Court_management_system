@@ -21,6 +21,7 @@ export default function CustomizedTables() {
   const [caseid, setcaseid] = useState("");
   const [casemodal, setcasemodal] = useState(false);
   const [judgesModal, setjudgesModal] = useState(false);
+  const [clientid,setclientid] = useState();
   const [c,setc] = useState(false);
 
   const useStyles = makeStyles({
@@ -84,6 +85,7 @@ export default function CustomizedTables() {
     <AssignJudgesList
       Handler={() => listJudge()}
       caseid={caseid}
+      clientid={clientid}
       judgesModal={judgesModal}
     />
   )}
@@ -141,6 +143,7 @@ export default function CustomizedTables() {
                   onClick={() => {
                     listJudge();
                     setcaseid(row.case_id);
+                    setclientid(row.client_id);
                     setc(true);
                     
                 }}

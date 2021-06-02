@@ -22,7 +22,7 @@ export default function ComplexGrid() {
     console.log("FUNCTION");
     const judgeProfile = () => {
       axios.post("/judges/info", { judge_id: J_id }).then((response) => {
-        //   console.log(response.data[0]);
+         console.log(response.data[0]);
         setuserData(response.data[0]);
       });
     };
